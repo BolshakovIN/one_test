@@ -1,4 +1,5 @@
 from selenium import webdriver
+import pytest
 
 link = "http://selenium1py.pythonanywhere.com/"
 
