@@ -7,7 +7,11 @@ link = "http://selenium1py.pythonanywhere.com/"
 def browser():
     print("\nstart browser for test..")
     browser = webdriver.Chrome()
-    return browser
+    yield browser
+    # этот код выполнится после завершения теста
+    print("\nquit browser..")
+    browser.quit()
+
 class TestMainPage():
     def test_ques_should_see_link(self, browser):
         browser.get(link)
