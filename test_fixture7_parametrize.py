@@ -1,0 +1,32 @@
+from selenium import webdriver
+import pytest
+
+@pytest.fixture(scope='function')
+def browser():
+    print('\ntest browser start')
+    browser = webdriver.Chrome()
+    yield browser
+    print('\ntest browser quit')
+    browser.quit()
+
+#параметризованные тесты для метода
+@pytest.mark.parametrize('language' , ["ru","en-db"])
+def test_quest_should_see_login_link(browser,language):
+    link = f"http://selenium1py.pythonanywhere.com/{language}/"
+    browser.get(link)
+    browser.find_element_by_css_selector("#login_link")
+
+#параметризованные тесты можно задавать и для всего класса
+@pytest.mark.parametrize('language', ["ru", "en-gb"])
+class TestLogin(object):
+    def test_guest_should_see_login_link(self, browser, language):
+        link = f"http://selenium1py.pythonanywhere.com/{language}/"
+        browser.get(link)
+        browser.find_element_by_css_selector("#login_link")
+        # этот тест запустится 2 раза
+
+    def test_guest_should_see_navbar_element(self, browser, language):
+        link = f"http://selenium1py.pythonanywhere.com/{language}/"
+        browser.get(link)
+        browser.find_element_by_css_selector("#login_link")
+        #этот тест тоже запустится дважды
